@@ -125,3 +125,18 @@ func TestModel_Execute(t *testing.T) {
 	testEditAndExecute(false)
 	testEditAndExecute(true)
 }
+
+
+func TestVectorFromBytes(t *testing.T) {
+	v := metamodel.Vector{0,1,-127}
+	vb := metamodel.VectorToBytes(v)
+	t.Logf("vector: %v\n", v)
+	t.Logf("bytes: %v\n",vb)
+	v2 := metamodel.VectorFromBytes(vb)
+	t.Logf("vector: %v\n", v2)
+	for i, v := range v {
+		if v != v2[i] {
+			t.Fatalf("mismatch %v <=> %v", v, v2[i])
+		}
+	}
+}
