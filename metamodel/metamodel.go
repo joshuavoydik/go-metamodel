@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-// Position defines graphical layout of a Place or Transition element
+// Position defines location of a Place or Transition element
 type Position struct {
 	X int64 `json:"x"`
 	Y int64 `json:"y"`
@@ -22,6 +22,27 @@ type RoleMap = map[string]Role
 
 type Vector = []int64
 
+func VectorToBytes(v Vector) []byte {
+	bv := make([]byte, len(v))
+	for i, b := range v {
+		bv[i] = byte(b)
+	}
+	return bv
+}
+
+func VectorFromBytes(bv []byte) (v Vector) {
+	v = make([]int64, len(bv))
+	for i, b := range bv {
+		byteToInt := int(b)
+		if byteToInt > 127 {
+			v[i] = int64(byteToInt-256)
+		} else {
+			v[i] = int64(byteToInt)
+		}
+	}
+	return v
+}
+
 // Place elements contain tokens
 type Place struct {
 	Label    string `json:"label"`
@@ -33,7 +54,7 @@ type Place struct {
 
 type PlaceMap = map[string]*Place
 
-// Guard inhibits a transition
+// Guard attributes inhibit a transition
 type Guard struct {
 	Label string `json:"label"`
 	Delta Vector `json:"delta"`

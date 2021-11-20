@@ -2,8 +2,9 @@ package metamodel_test
 
 import (
 	"encoding/json"
-	"github.com/pflow-dev/go-metamodel/metamodel"
 	"testing"
+
+	"github.com/pflow-dev/go-metamodel/metamodel"
 )
 
 func testModelDeclaration(m metamodel.Declaration) {
@@ -103,7 +104,7 @@ func (c testCmd) assertInhibited(t *testing.T) {
 
 func TestModel_Execute(t *testing.T) {
 
-	testEditAndExecute := func (rebuild bool) {
+	testEditAndExecute := func(rebuild bool) {
 		var mm = metamodel.New("test").Define(testModelDeclaration)
 		if rebuild {
 			mm.Edit().Graph().Index()
